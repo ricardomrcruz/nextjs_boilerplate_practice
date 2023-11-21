@@ -1,9 +1,10 @@
 import React from 'react';
+import { useState } from 'react';
 import  AdCard, { AdCardProps } from './AdCard';
 
 
 const RecentAds: React.FC = () => {
-
+  const [total, setTotal] = useState(0);
   const ads: AdCardProps[] = [
     {
       imgUrl: '/images/table.webp',
@@ -46,16 +47,24 @@ const RecentAds: React.FC = () => {
   return (
     <>
       <h2>Annonces récentes</h2>
+      <p>Prix total: {total} $</p>
+      <button className='button' onClick={()=>{
+        setTotal(total*0);
+      }}>Reset Prix</button>
 
-      <section className="recent-ads">
-        
+      <section className="recent-ads">      
         {ads.map((ad)=> (
-          <AdCard
-          imgUrl={ad.imgUrl}
-          link={ad.link}
-          price={ad.price}
-          title={ad.title}
-        />
+            <div key={ad.title}>
+                <AdCard
+                imgUrl={ad.imgUrl}
+                link={ad.link}
+                price={ad.price}
+                title={ad.title}
+                />
+                <button className='button' onClick={() => {
+                  setTotal(total+ad.price);}}
+                >Add price to total</button>
+            </div>
         ))}
         
       </section>
