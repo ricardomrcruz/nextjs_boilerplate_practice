@@ -6,9 +6,9 @@ import dynamic from "next/dynamic";
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />;
-    </Layout>
+   
+      <Component {...pageProps} />
+    
   );
 }
 
