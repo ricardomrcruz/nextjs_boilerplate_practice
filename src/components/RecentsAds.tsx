@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import  AdCard, { AdCardProps } from './AdCard';
+import {Ad} from '@/types';
+import  AdCard from './AdCard';
 import axios from 'axios';
 
 
@@ -48,45 +49,27 @@ import axios from 'axios';
 
 const RecentAds = () => {
   const [total, setTotal] = useState(0);
-  const [ads, setAds] = useState<AdCardProps[]>([])
+  const [ads, setAds] = useState<Ad[]>([])
   
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios.get<AdCardProps[]>("http://localhost:4000/ads/");
-        // console.log(result);
-        setAds(result.data);
-      } catch (err) {
-        console.log("error", err);
-      }
-    };
-    fetchData();
-  }, []);
+     axios.get<Ad[]>("http://localhost:4000/ads/")
+       .then((res)=>{
+        setAds(res.data);
+       })
+        .catch(console.error);
+      }, []);
 
 
   
   return (
     <>
       <h2>Annonces récentes</h2>
-      <p>Prix total: {total} $</p>
-      <button className='button' onClick={()=>{
-        setTotal(total*0);
-      }}>Reset Prix</button>
+      
 
-      <section className="recent-ads">      
+      <section className=" flex flex-wrap ">      
         {ads.map((ad)=> (
-            <div key={ad.id}>
-                <AdCard
-                id={ad.id}
-                picture={ad.picture}
-                link={ad.link}
-                price={ad.price}
-                title={ad.title}
-                />
-                <button className='button' onClick={() => {
-                  setTotal(total+ad.price);}}
-                >Add price to total</button>
-            </div>
+        
+                <AdCard key={ad.id} ad={ad} link={`/ads/${ad.id}`}/>
         ))}
         
       </section>

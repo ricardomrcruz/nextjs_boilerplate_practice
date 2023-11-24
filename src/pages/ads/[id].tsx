@@ -16,6 +16,17 @@ export default function AdDetails() {
       .catch(console.error);
   }, [id]);
 
+  const deleteAd = async () => {
+    try{
+      
+      await axios.delete(`http://localhost:4000/ads/${id}`);
+      router.push('/');
+   
+    }catch (error){
+      console.error("delete ad was not possible", error);
+    }
+  }
+
   console.log(router);
 
   return (
@@ -28,6 +39,10 @@ export default function AdDetails() {
           </div>
           <img src={ad.picture} alt="" />
           <p>Membre: {ad.owner}</p>
+          
+          <br /><br /><br />
+
+          <button onClick={deleteAd} className="button" >DELETE ADD</button>
         </>
       ) : (
         <p>Chargement...</p>
