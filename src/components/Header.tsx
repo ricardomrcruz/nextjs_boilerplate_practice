@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Category } from "@/types";
 import qs from "querystring";
+import { FaBreadSlice } from "react-icons/fa6";
 
 
 
@@ -41,15 +42,18 @@ const Header: React.FC = () => {
   return (
     <header className="bg-[#363636] font-grotesk pt-5">
       <div className="flex items-center justify-between">
-        {" "}
-        {/* Flex container */}
-        <h1>
-          <a href="/" className="mx-auto max-w-xl px- sm:px-6 lg:px-8">
-            <span className="text-3xl text-[#ac362e]">TheBadCorner</span>
-          </a>
-        </h1>
+        
+      <div className="flex items-center" style={{ marginRight: "-5rem" }}>
+    <h1>
+      <a href="/" className="mx-auto max-w-xl px-9 sm:px-9 lg:px-8">
+        <span className="ml-8 flex text-3xl text-[#ac362e]">
+          <FaBreadSlice />&nbsp;The Bad Corner
+        </span>
+      </a>
+    </h1>
+  </div>
         <form
-          className="relative"
+          className="relative mx-auto flex items-center "
           onSubmit={(e) => {
             e.preventDefault();
             router.push(
@@ -92,7 +96,7 @@ const Header: React.FC = () => {
         <button
           type="button"
           onClick={clickAddad}
-          className="mx-5 inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-[#ac362e] transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+          className="mr-10 inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-[#ac362e] transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
           data-te-ripple-init
         >
           Publier Annonce

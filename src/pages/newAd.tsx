@@ -120,7 +120,7 @@ export default function newAd() {
                 Categories
               </option> 
               {categories.map((c) => (
-                <option key={c.id} value={c.id}>
+                <option className="capitalize" key={c.id} value={c.id}>
                   {" "}
                   {c.name}{" "}
                 </option>
