@@ -2,11 +2,13 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+ 
+    // Or if using `src` directory:
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -18,7 +20,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
-        // ... other font families
+        grotesk: ['Space Grotesk', 'sans-serif'],
+        manrope: ['Manrope', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -77,4 +80,6 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  
+  
 }
