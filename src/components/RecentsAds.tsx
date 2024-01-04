@@ -16,21 +16,22 @@ const GET_RECENT_ADS = gql`
   }
 `;
 
+type RecentAd = {
+  id: number;
+  title: string;
+  price:  number;
+  picture: string;
+  
+} 
+
 export default function RecentAds() {
-  const { data } = useQuery(GET_RECENT_ADS);
+  const { data } = useQuery<RecentAd[]>(GET_RECENT_ADS);
+
+  const ads = data || [];
 
   console.log(data);
 
-  const [ads, setAds] = useState<Ad[]>([]);
 
-  useEffect(() => {
-    axios
-      .get<Ad[]>("http://localhost:4000/ads/")
-      .then((res) => {
-        setAds(res.data);
-      })
-      .catch(console.error);
-  }, []);
 
   return (
     <>
