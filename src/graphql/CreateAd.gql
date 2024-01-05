@@ -1,0 +1,17 @@
+mutation CreateAd($data: NewAdInput!) {
+  createAd(data: $data) {
+    id
+    title
+    description
+    price
+    owner
+    picture
+    location
+    category {
+      id
+    }
+    tags {
+      id
+    }
+  }
+}

@@ -6,48 +6,15 @@ import { Category } from "@/types";
 import Input from "@/components/Input";
 import TextArea from "@/components/TextArea";
 import { gql, useQuery } from "@apollo/client";
-
-const CREATE_AD_MUTATION = gql`
-  mutation CreateAd($data: NewAdInput!) {
-    createAd(data: $data) {
-      id
-      title
-      description
-      price
-      owner
-      picture
-      location
-      category {
-        id
-      }
-      tags {
-        id
-      }
-    }
-  }
-`;
-
-type NewAd = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  owner: string;
-  picture: string;
-  location: string;
-  category: {
-    id: number;
-  };
-  tags: {
-    id: number;
-  }[];
-};
+import { useCreateAdMutation } from "@/graphql/generated/schema";
 
 export default function newAd() {
   // FETCH CATEGORIES
-  const router = useRouter();
-  
+
+  const [createAd] = useCreateAdMutation();
   const [categories, setCategories] = useState<Category[]>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     axios
@@ -56,9 +23,15 @@ export default function newAd() {
       .catch(console.error);
   }, []);
 
-  console.log(categories);
-
-  
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const formJSON: any = Object.fromEntries(formData.entries());
+    formJSON.price = parseFloat(formJSON.price);
+    formJSON.category = { id: parseInt(formJSON.category) };
+    const res = await createAd({ variables: { data: { ...formJSON } } });
+    router.push(`/ads/${res.data?.createAd.id}`);
+  };
 
   return (
     <Layout pageTitle="Creation d'un ad">
@@ -70,26 +43,7 @@ export default function newAd() {
       rounded bg-[#363636] p-6 
       shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
       >
-        <form
-          className="w-full"
-          onSubmit={(e) => {
-            e.preventDefault();
-
-            const form = e.target as HTMLFormElement;
-            const formData = new FormData(form);
-
-            const formJSON: any = Object.fromEntries(formData.entries());
-            formJSON.price = parseFloat(formJSON.price);
-            console.log(formJSON);
-
-            axios.post("http://localhost:4000/ads/", formJSON).then((res) => {
-              console.log("ad added success", res.data);
-              router.push("/");
-              form.reset();
-            });
-          }}
-          action=""
-        >
+        <form className="w-full" onSubmit={handleSubmit}>
           <h1 className="text-2xl text-neutral-300">Creation d'Annonce</h1>
           <br />
 
