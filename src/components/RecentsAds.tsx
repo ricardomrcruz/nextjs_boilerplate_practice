@@ -19,19 +19,16 @@ const GET_RECENT_ADS = gql`
 type RecentAd = {
   id: number;
   title: string;
-  price:  number;
+  price: number;
   picture: string;
-  
-} 
+};
 
 export default function RecentAds() {
-  const { data } = useQuery<RecentAd[]>(GET_RECENT_ADS);
+  const { data } = useQuery<{ ads: RecentAd[] }>(GET_RECENT_ADS);
 
-  const ads = data || [];
+  const ads = data?.ads || [];
 
   console.log(data);
-
-
 
   return (
     <>

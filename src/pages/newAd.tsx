@@ -5,10 +5,48 @@ import { useRouter } from "next/router";
 import { Category } from "@/types";
 import Input from "@/components/Input";
 import TextArea from "@/components/TextArea";
+import { gql, useQuery } from "@apollo/client";
+
+const CREATE_AD_MUTATION = gql`
+  mutation CreateAd($data: NewAdInput!) {
+    createAd(data: $data) {
+      id
+      title
+      description
+      price
+      owner
+      picture
+      location
+      category {
+        id
+      }
+      tags {
+        id
+      }
+    }
+  }
+`;
+
+type NewAd = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  owner: string;
+  picture: string;
+  location: string;
+  category: {
+    id: number;
+  };
+  tags: {
+    id: number;
+  }[];
+};
 
 export default function newAd() {
   // FETCH CATEGORIES
-
+  const router = useRouter();
+  
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -20,7 +58,7 @@ export default function newAd() {
 
   console.log(categories);
 
-  const router = useRouter();
+  
 
   return (
     <Layout pageTitle="Creation d'un ad">
@@ -97,7 +135,6 @@ export default function newAd() {
           />
 
           <div className="relative">
-           
             <select
               className="
             
@@ -114,11 +151,10 @@ export default function newAd() {
             "
               name="category"
               id="category"
-              
             >
               <option value="" disabled selected>
                 Categories
-              </option> 
+              </option>
               {categories.map((c) => (
                 <option className="capitalize" key={c.id} value={c.id}>
                   {" "}
