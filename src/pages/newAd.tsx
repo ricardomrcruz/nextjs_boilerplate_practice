@@ -64,9 +64,9 @@ export default function newAd() {
 
           <Input
             label="Prix €"
-            id="title"
+            id="price"
             type="number"
-            name="title"
+            name="price"
             required
           />
 
